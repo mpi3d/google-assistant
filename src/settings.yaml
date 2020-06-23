@@ -1,0 +1,74 @@
+Name : Matthiew
+
+Sense hat : on
+
+Network constraint : on
+Start of conection : 07,00 # {Hour},{Minute}
+End of conection : 21,30 # {Hour},{Minute}
+
+Lcd screen : on
+Square button : 4 # Enter the number of a gpio
+Round button : 17 # Enter the number of a gpio
+Right button : 22 # Enter the number of a gpio
+Left button : 27 # Enter the number of a gpio
+Time stand by : 30
+Custom menu : # Choice : 'Music', 'Led strip', 'Clock', 'Weather'
+ - 'Music'
+ - 'Led strip'
+ - 'Clock'
+ - 'Weather'
+
+Alarm : on
+
+Command voice : off
+Command configuration : # ['{Command name}', ['{Command(in python)}',{Command(in python)}]]
+ - []
+
+Languages : # ['{Language name}', '{Language abbreviation}']
+ - ['French','fr']
+ - ['Spanish','es']
+
+Led strips : on
+Led strips names : # ['{Led strip name}', '{Led strip ip address}']
+ - ['Bed','192.168.0.41']
+ - ['Dressing','192.168.0.42']
+Custom colors : # ['{Color name}', '{Command(in python)}']
+ - ['Max', 'setRgbw(255,255,255,255)']
+ - ['Warm White', 'setWarmWhite255(255)']
+ - ['Cool White', 'setRgb(255,255,255)']
+ - ['Red', 'setRgb(255,0,0)']
+ - ['Green', 'setRgb(0,255,0)']
+ - ['Blue', 'setRgb(0,0,255)']
+ - ['Yellow', 'setRgb(255,255,0)']
+ - ['Purple', 'setRgb(255,0,255)']
+ - ['Orange', 'setRgb(255,100,0)']
+ - ['Sleep color', 'setRgb(random.randint(0,50),random.randint(0,50),random.randint(0,50))']
+ - ['Sleep gradual', 'setCustomPattern([(0,50,0),(50,0,0),(0,0,50),(50,50,0),(0,50,50),(20,50,0),(50,50,50)],80,"gradual")']
+ - ['Random color', 'setRgb(random.randint(0,255),random.randint(0,255),random.randint(0,255))']
+ - ['7 colors gradual', 'setCustomPattern([(0,255,0),(255,0,0),(0,0,255),(255,255,0),(0,255,255),(100,255,0),(255,255,255)],80,"gradual")']
+ - ['7 colors jump', 'setCustomPattern([(0,255,0),(255,0,0),(0,0,255),(255,255,0),(0,255,255),(100,255,0),(255,255,255)],80,"jump")']
+ - ['7 colors strobe', 'setCustomPattern([(0,255,0),(255,0,0),(0,0,255),(255,255,0),(0,255,255),(100,255,0),(255,255,255)],80,"strobe")']
+
+Messages : on
+Messages configuration : # ['{Condition(in python)}', '{Message}']
+ - ['(datetime.date.today().weekday() == 0 and int(time.strftime("%H")) < 12) or (datetime.date.today().weekday() == 2 and int(time.strftime("%H")) > 12) or (datetime.date.today().weekday() == 5 and int(time.strftime("%H")) < 12)','Water Plants']
+ - ['datetime.date.today().day < 7 and datetime.date.today().weekday() == 5 and int(time.strftime("%H")) < 12','Water Cactus']
+ - ['datetime.date.today().day < 7 and datetime.date.today().weekday() == 6 and int(time.strftime("%H")) < 12','Water Cactus']
+ - ['time.strftime("%d") == "30" and time.strftime("%b") == "May"','Happy Birth Day To You ! Happy Birth Day To You !!!']
+
+Music : on
+Path to your music : '/home/pi/Music'
+Radios : # ['{Radio name}', '{Radio URL}']
+ - ['My music', 'http://hi5.streamingsoundtracks.com']
+
+Shutdown option : on
+
+Translation : on
+
+Volume : on
+
+Weather : on
+Apikey : 'abcdefghijklmnopqrstuvwxyz123456789' # Enter your apikey(go to https://darksky.net/dev to create your apikey)
+Location : 3.171776,50.532278 # {latitude},{longitude}
+
+Add actions in crontab : # ['{Day}', '{Hour}', '{Minute}', '{Action(in python)}']
