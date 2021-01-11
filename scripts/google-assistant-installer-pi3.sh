@@ -23,20 +23,20 @@ echo "Model id : $modelid
 Music stop : X,XX,XX
 Alarm cron : None
 Alarm sound : Def
-Alarm led : None" > /home/pi/Google_Assistant/src/save.yaml
+Alarm led : None" > ~/google-assistant/src/save.yaml
 
-echo "" > /home/pi/Google_Assistant/src/ga_error
+echo "" > ~/google-assistant/src/ga_error
 
-cd /home/pi/
+cd ~/
 sudo apt-get update -y
-sed 's/#.*//' /home/pi/Google_Assistant/requirements/Google_Assistant-system-requirements.txt | xargs sudo apt-get install -y
+sed 's/#.*//' ~/google-assistant/requirements/google-assistant-system-requirements.txt | xargs sudo apt-get install -y
 
 python3 -m venv .env
 .env/bin/python -m pip install --upgrade pip setuptools wheel
 source .env/bin/activate
 
-cp /home/pi/Google_Assistant/requirements/RTIMU.cpython-37m-arm-linux-gnueabihf.so /home/pi/.env/lib/python3.7/site-packages
-pip3 install -r /home/pi/Google_Assistant/requirements/Google_Assistant-pip-requirements.txt
+cp ~/google-assistant/requirements/RTIMU.cpython-37m-arm-linux-gnueabihf.so ~/.env/lib/python3.7/site-packages
+pip3 install -r ~/google-assistant/requirements/google-assistant-pip-requirements.txt
 pip3 install google-assistant-library==1.0.0
 pip3 install google-assistant-grpc==0.2.0
 pip3 install google-assistant-sdk==0.5.0

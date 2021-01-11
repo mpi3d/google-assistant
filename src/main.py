@@ -21,7 +21,7 @@ from google.assistant.library.event import EventType
 from google.assistant.library.file_helpers import existing_file
 from google.assistant.library.device_helpers import register_device
 
-settings_file = open("/home/pi/Google_Assistant/src/settings.yaml", "r")
+settings_file = open("~/google-assistant/src/settings.yaml", "r")
 settings = settings_file.read()
 settings = yaml.load(settings)
 settings_file.close()
@@ -81,7 +81,7 @@ vlc = mediaplayer.vlcplayer()
 class Myassistant():
 
 	def __init__(self):
-		var_save_file = open("/home/pi/Google_Assistant/src/save.yaml", "r")
+		var_save_file = open("~/google-assistant/src/save.yaml", "r")
 		self.var_save = var_save_file.read()
 		self.var_save = yaml.load(self.var_save)
 		var_save_file.close()
@@ -93,7 +93,7 @@ class Myassistant():
 		self.text_say = 'Sorry I do not remeber'
 		self.act_cron = [[str(self.var_save.get("Music stop").split(',')[0]), str(self.var_save.get("Music stop").split(',')[1]), str(self.var_save.get("Music stop").split(',')[2]), 'vlc.stop_vlc()#cantdel']]
 		if settings.get("Network constraint"):
-			self.act_cron.append(['-',str(settings.get("Start of conection").split(',')[0]),str(settings.get("Start of conection").split(',')[1]),'os.system("sudo systemctl restart Google_Assistant-ok-google.service")#cantdel'])
+			self.act_cron.append(['-',str(settings.get("Start of conection").split(',')[0]),str(settings.get("Start of conection").split(',')[1]),'os.system("sudo systemctl restart google-assistant-ok-google.service")#cantdel'])
 			m = str(settings.get("End of conection").split(',')[1])
 			h = str(settings.get("End of conection").split(',')[0])
 			if m == '00':
@@ -1787,7 +1787,7 @@ class Myassistant():
 		hat.clear()
 
 	def sound():
-		subprocess.Popen(["aplay", "/home/pi/Google_Assistant/src/sound/Bip.wav"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		subprocess.Popen(["aplay", "~/google-assistant/src/sound/bip.wav"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 	def volume_set(volume):
 		os.system("amixer set 'Master' "+str(volume)+"%")
@@ -1801,10 +1801,10 @@ class Myassistant():
 
 	def say(self, words, language,save=True):
 		if not words == '':
-			gTTS(text=words, lang=language).save("/home/pi/Google_Assistant/src/say.mp3")
+			gTTS(text=words, lang=language).save("~/google-assistant/src/say.mp3")
 			threading.Thread(target=self.process_event('ON_RESPONDING_STARTED:\n  {"is_error_response": false}'),args=()).start()
-			os.system("mpg123 -q /home/pi/Google_Assistant/src/say.mp3")
-			os.remove("/home/pi/Google_Assistant/src/say.mp3")
+			os.system("mpg123 -q ~/google-assistant/src/say.mp3")
+			os.remove("~/google-assistant/src/say.mp3")
 			if save:
 				self.text_say = words
 			self.process_event('ON_RESPONDING_FINISHED')
@@ -1860,7 +1860,7 @@ class Myassistant():
 					if int(time.strftime("%M")) < int(li[2]):
 						alfortom = True
 		if alfortom:
-			alarm = Image.open('/home/pi/Google_Assistant/src/images/clock/alarme.jpg')
+			alarm = Image.open('~/google-assistant/src/images/clock/alarme.jpg')
 			alarm = alarm.resize((10,9))
 			alarm = ImageOps.invert(alarm)
 			o = random.randint(1,4)
@@ -1942,7 +1942,7 @@ class Myassistant():
 		for u in self.var_save:
 			w.append(str(str(u)+" : "+str(self.var_save.get(str(u)))))
 		w = "\n".join(w)
-		fichier = open("/home/pi/Google_Assistant/src/save.yaml", "w")
+		fichier = open("~/google-assistant/src/save.yaml", "w")
 		fichier.write(w)
 		fichier.close()
 
@@ -2002,7 +2002,7 @@ class Myassistant():
 		threading.Timer(0, Myassistant.stop_al_time,[self]).start()
 		if self.var_save.get("Alarm sound") == 'Def':
 			while self.al:
-				os.system("mpg123 -q /home/pi/Google_Assistant/src/sound/Alarm.mp3")
+				os.system("mpg123 -q ~/google-assistant/src/sound/alarm.mp3")
 		else:
 			fileplay = self.var_save.get("Alarm sound")
 			if os.path.isdir(fileplay):
@@ -2037,7 +2037,7 @@ class Myassistant():
 					if not str(err) == "b''":
 						dfgh = False
 		while self.al:
-			os.system("mpg123 -q /home/pi/Google_Assistant/src/sound/Alarm.mp3")
+			os.system("mpg123 -q ~/google-assistant/src/sound/alarm.mp3")
 		self.al = False
 		self.veil = 0
 		if settings.get("Sense hat"):
@@ -2341,19 +2341,19 @@ class Myassistant():
 			draw = ImageDraw.Draw(image)
 			heure = time.strftime("%H")
 			minute = time.strftime("%M")
-			chiffre1 = Image.open('/home/pi/Google_Assistant/src/images/clock/' + str(heure[0]) + '.jpg')
+			chiffre1 = Image.open('~/google-assistant/src/images/clock/' + str(heure[0]) + '.jpg')
 			chiffre1 = chiffre1.resize((35,35))
 			chiffre1 = ImageOps.invert(chiffre1)
 			image.paste(chiffre1, (-4,0))
-			chiffre2 = Image.open('/home/pi/Google_Assistant/src/images/clock/' + str(heure[1]) + '.jpg')
+			chiffre2 = Image.open('~/google-assistant/src/images/clock/' + str(heure[1]) + '.jpg')
 			chiffre2 = chiffre2.resize((35,35))
 			chiffre2 = ImageOps.invert(chiffre2)
 			image.paste(chiffre2, (27,0))
-			chiffre3 = Image.open('/home/pi/Google_Assistant/src/images/clock/' + str(minute[0]) + '.jpg')
+			chiffre3 = Image.open('~/google-assistant/src/images/clock/' + str(minute[0]) + '.jpg')
 			chiffre3 = chiffre3.resize((35,35))
 			chiffre3 = ImageOps.invert(chiffre3)
 			image.paste(chiffre3, (66,0))
-			chiffre4 = Image.open('/home/pi/Google_Assistant/src/images/clock/' + str(minute[1]) + '.jpg')
+			chiffre4 = Image.open('~/google-assistant/src/images/clock/' + str(minute[1]) + '.jpg')
 			chiffre4 = chiffre4.resize((35,35))
 			chiffre4 = ImageOps.invert(chiffre4)
 			image.paste(chiffre4, (97,0))
@@ -2433,7 +2433,7 @@ class Myassistant():
 				draw.text(((128 - (len(resources) * 6)) / 2,53),resources, font=font, fill=225)
 			if self.al:
 				if alblink < 3:
-					alarm = Image.open('/home/pi/Google_Assistant/src/images/clock/alarme.jpg')
+					alarm = Image.open('~/google-assistant/src/images/clock/alarme.jpg')
 					alarm = alarm.resize((10,9))
 					alarm = ImageOps.invert(alarm)
 					image.paste(alarm, (59,0))
@@ -2444,7 +2444,7 @@ class Myassistant():
 					else:
 						alblink = alblink + 1
 			elif alfortom:
-				alarm = Image.open('/home/pi/Google_Assistant/src/images/clock/alarme.jpg')
+				alarm = Image.open('~/google-assistant/src/images/clock/alarme.jpg')
 				alarm = alarm.resize((10,9))
 				alarm = ImageOps.invert(alarm)
 				image.paste(alarm, (59,0))
@@ -2574,73 +2574,73 @@ class Myassistant():
 					print('Failed : "weather"')
 			if afmete == 'currently':
 				if currently.icon == 'cloudy':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Cloud.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/cloud.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'hail' or currently.icon == 'sleet':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Hail.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/hail.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'fog':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Haze.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/haze.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'clear-night':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Moon.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/moon.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'partly-cloudy-night':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Partly Moon.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/partly-moon.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'partly-cloudy-day':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Partly Sunny.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/partly-sunny.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'rain':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Rain.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/rain.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'snow':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Snow.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/snow.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'thunderstorm':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Storm.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/storm.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'clear-day':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Sun.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/sun.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'tornado':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Tornado.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/tornado.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif currently.icon == 'wind':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Wind.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/wind.jpg')
 					icon = icon.resize((34,35))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(0,12))
 					draw.line((2,26,11,26), fill=255)
-				temp = Image.open('/home/pi/Google_Assistant/src/images/weather/temperature.jpg')
+				temp = Image.open('~/google-assistant/src/images/weather/temperature.jpg')
 				temp = temp.resize((18,15))
 				temp = ImageOps.invert(temp)
 				temp = temp.crop(temp.getbbox())
 				image.paste(temp,(38,14))
 				draw.rectangle((39, 25, 42, 27), outline=255, fill=255)
-				humidity = Image.open('/home/pi/Google_Assistant/src/images/weather/humidity.jpg')
+				humidity = Image.open('~/google-assistant/src/images/weather/humidity.jpg')
 				humidity = humidity.resize((14,14))
 				humidity = ImageOps.invert(humidity)
 				humidity = humidity.crop(humidity.getbbox())
@@ -2652,7 +2652,7 @@ class Myassistant():
 				except AttributeError:
 					pass
 				image.paste(wind,(round(78.5-(wind.size[0]/2)),round(21.5-(wind.size[1]/2))))
-				precip = Image.open('/home/pi/Google_Assistant/src/images/weather/pluviometer.jpg')
+				precip = Image.open('~/google-assistant/src/images/weather/pluviometer.jpg')
 				precip = precip.resize((15,15))
 				precip = ImageOps.invert(precip)
 				image.paste(precip,(71,32))
@@ -2697,62 +2697,62 @@ class Myassistant():
 					if day > -1 and day < 6:
 						fday = daily.get_day(day)
 						if fday['icon'] == 'cloudy':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Cloud.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/cloud.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'hail' or fday['icon'] == 'sleet':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Hail.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/hail.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'fog':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Haze.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/haze.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'clear-night':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Moon.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/moon.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'partly-cloudy-night':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Partly Moon.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/partly-moon.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'partly-cloudy-day':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Partly Sunny.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/partly-sunny.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'rain':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Rain.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/rain.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'snow':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Snow.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/snow.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'thunderstorm':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Storm.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/storm.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'clear-day':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Sun.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/sun.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'tornado':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Tornado.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/tornado.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
 						elif fday['icon'] == 'wind':
-							icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Wind.jpg').resize((50,50))
+							icon = Image.open('~/google-assistant/src/images/weather/wind.jpg').resize((50,50))
 							icon = ImageOps.invert(icon)
 							icon = icon.crop(icon.getbbox())
 							icon = icon.resize((27,17))
@@ -2797,73 +2797,73 @@ class Myassistant():
 				day = daysel
 				fday = daily.get_day(day)
 				if fday['icon'] == 'cloudy':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Cloud.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/cloud.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'hail' or fday['icon'] == 'sleet':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Hail.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/hail.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'fog':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Haze.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/haze.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'clear-night':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Moon.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/moon.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'partly-cloudy-night':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Partly Moon.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/partly-moon.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'partly-cloudy-day':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Partly Sunny.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/partly-sunny.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'rain':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Rain.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/rain.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'snow':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Snow.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/snow.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'thunderstorm':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Storm.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/storm.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'clear-day':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Sun.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/sun.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'tornado':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Tornado.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/tornado.jpg')
 					icon = icon.resize((50,50))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(-7,5))
 				elif fday['icon'] == 'wind':
-					icon = Image.open('/home/pi/Google_Assistant/src/images/weather/Wind.jpg')
+					icon = Image.open('~/google-assistant/src/images/weather/wind.jpg')
 					icon = icon.resize((34,35))
 					icon = ImageOps.invert(icon)
 					image.paste(icon,(0,12))
 					draw.line((2,26,11,26), fill=255)
-				tmin = Image.open('/home/pi/Google_Assistant/src/images/weather/tmin.jpg')
+				tmin = Image.open('~/google-assistant/src/images/weather/tmin.jpg')
 				tmin = tmin.resize((18,15))
 				tmin = ImageOps.invert(tmin)
 				tmin = tmin.crop(tmin.getbbox())
 				image.paste(tmin,(38,14))
 				draw.rectangle((39, 25, 42, 27), outline=255, fill=255)
-				tmax = Image.open('/home/pi/Google_Assistant/src/images/weather/tmax.jpg')
+				tmax = Image.open('~/google-assistant/src/images/weather/tmax.jpg')
 				tmax = tmax.resize((18,15))
 				tmax = ImageOps.invert(tmax)
 				tmax = tmax.crop(tmax.getbbox())
@@ -2876,7 +2876,7 @@ class Myassistant():
 				except AttributeError:
 					pass
 				image.paste(wind,(round(78.5-(wind.size[0]/2)),round(21.5-(wind.size[1]/2))))
-				precip = Image.open('/home/pi/Google_Assistant/src/images/weather/pluviometer.jpg')
+				precip = Image.open('~/google-assistant/src/images/weather/pluviometer.jpg')
 				precip = precip.resize((15,15))
 				precip = ImageOps.invert(precip)
 				image.paste(precip,(71,32))
@@ -3221,7 +3221,7 @@ class Myassistant():
 					w = y[3]
 					ison = wifiled.is_on
 					brightnes = wifiled.brightness
-				brightnessim = Image.open('/home/pi/Google_Assistant/src/images/led_strip/brightness.jpg')
+				brightnessim = Image.open('~/google-assistant/src/images/led_strip/brightness.jpg')
 				brightnessim = brightnessim.resize((17,17))
 				brightnessim = ImageOps.invert(brightnessim)
 				image.paste(brightnessim, (28,12))
@@ -3266,7 +3266,7 @@ class Myassistant():
 				draw.text((101,15), '+', font=font, fill=225)
 				if selection[1] == 4:
 					draw.rectangle((117, 15, 127, 25), outline=255, fill=0)
-				alar = Image.open('/home/pi/Google_Assistant/src/images/led_strip/alarme.jpg')
+				alar = Image.open('~/google-assistant/src/images/led_strip/alarme.jpg')
 				alar = alar.resize((7,7))
 				alar = ImageOps.invert(alar)
 				image.paste(alar, (119,17))
@@ -4476,12 +4476,12 @@ class Myassistant():
 					w = y[3]
 					ison = wifiled.is_on
 					brightnes = wifiled.brightness
-				brightnessim = Image.open('/home/pi/Google_Assistant/src/images/led_strip/brightness.jpg')
+				brightnessim = Image.open('~/google-assistant/src/images/led_strip/brightness.jpg')
 				brightnessim = brightnessim.resize((17,17))
 				brightnessim = ImageOps.invert(brightnessim)
 				image.paste(brightnessim, (28,12))
 				if selection[1] == 4:
-					sunrise = Image.open('/home/pi/Google_Assistant/src/images/led_strip/sunrise.png')
+					sunrise = Image.open('~/google-assistant/src/images/led_strip/sunrise.png')
 					sunrise = sunrise.resize((15,13))
 					sunrise = ImageOps.invert(sunrise)
 					image.paste(sunrise, (111,11))
@@ -4491,7 +4491,7 @@ class Myassistant():
 					draw.line((127,15,127,25), fill=255)
 					draw.line((109,15,127,15), fill=255)
 				else:
-					sunrise = Image.open('/home/pi/Google_Assistant/src/images/led_strip/sunrise.png')
+					sunrise = Image.open('~/google-assistant/src/images/led_strip/sunrise.png')
 					sunrise = sunrise.resize((15,13))
 					sunrise = ImageOps.invert(sunrise)
 					image.paste(sunrise, (111,11))
@@ -5062,7 +5062,7 @@ class Myassistant():
 					w = y[3]
 					ison = wifiled.is_on
 					brightnes = wifiled.brightness
-				brightnessim = Image.open('/home/pi/Google_Assistant/src/images/led_strip/brightness.jpg')
+				brightnessim = Image.open('~/google-assistant/src/images/led_strip/brightness.jpg')
 				brightnessim = brightnessim.resize((17,17))
 				brightnessim = ImageOps.invert(brightnessim)
 				image.paste(brightnessim, (28,12))
@@ -5601,7 +5601,7 @@ if __name__ == '__main__':
 			exit(0)
 		else:
 			print(error)
-			filerror = open('/home/pi/Google_Assistant/src/ga_error','a')
+			filerror = open('~/google-assistant/src/ga_error','a')
 			filerror.write(time.strftime("%d-%m-%Y %H:%M:%S    ")+str(error)+'\n')
 			filerror.close()
 			if settings.get("Sense hat"):
@@ -5671,12 +5671,12 @@ if __name__ == '__main__':
 							i = -4
 							disp.clear()
 							Myassistant.refrech_error()
-							os.system("sudo systemctl stop Google_Assistant-ok-google.service")
+							os.system("sudo systemctl stop google-assistant-ok-google.service")
 						elif GPIO.input(brigt) == 0:
 							i = -4
 							disp.clear()
 							Myassistant.refrech_error()
-							os.system("sudo systemctl restart Google_Assistant-ok-google.service")
+							os.system("sudo systemctl restart google-assistant-ok-google.service")
 						elif GPIO.input(bround) == 0:
 							i = -4
 							disp.clear()
@@ -5689,8 +5689,8 @@ if __name__ == '__main__':
 					if not i == -5:
 						disp.clear()
 						Myassistant.refrech_error()
-						os.system("sudo systemctl stop Google_Assistant-ok-google.service")
+						os.system("sudo systemctl stop google-assistant-ok-google.service")
 				else:
 					disp.clear()
 					Myassistant.refrech_error()
-					os.system("sudo systemctl stop Google_Assistant-ok-google.service")
+					os.system("sudo systemctl stop google-assistant-ok-google.service")

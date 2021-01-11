@@ -39,7 +39,7 @@ pcm.speaker {
   slave {
     pcm 'hw:$spcardn,$spdevicen'
   }
-}" > /home/pi/.asoundrc
+}" > ~/.asoundrc
 
 YES_ANSWER=1
 NO_ANSWER=2
@@ -146,13 +146,13 @@ if [ "$USER_RESPONSE" = "$YES_ANSWER" ]; then
   USER_RESPONSE=$?
   if [ "$USER_RESPONSE" = "$YES_ANSWER" ]; then
     echo "=============Recording Mic Audio Sample============="
-    arecord -D plughw:1,0 -d 10 /home/pi/mic_test.wav
+    arecord -D plughw:1,0 -d 10 ~/mic_test.wav
     echo ""
     echo "Finished recording the samples."
     echo ""
     echo "Playing back the recorded audio sample......"
     echo ""
-    aplay /home/pi/mic_test.wav
+    aplay ~/mic_test.wav
     echo "Did you hear the recorded audio sample?"
     parse_user_input 1 1 0
     USER_RESPONSE=$?

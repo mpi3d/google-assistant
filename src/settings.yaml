@@ -1,4 +1,4 @@
-Name : Matthiew
+Name : Matthieu
 
 Sense hat : on
 
@@ -54,10 +54,10 @@ Messages configuration : # ['{Condition(in python)}', '{Message}']
  - ['(datetime.date.today().weekday() == 0 and int(time.strftime("%H")) < 12) or (datetime.date.today().weekday() == 2 and int(time.strftime("%H")) > 12) or (datetime.date.today().weekday() == 5 and int(time.strftime("%H")) < 12)','Water Plants']
  - ['datetime.date.today().day < 7 and datetime.date.today().weekday() == 5 and int(time.strftime("%H")) < 12','Water Cactus']
  - ['datetime.date.today().day < 7 and datetime.date.today().weekday() == 6 and int(time.strftime("%H")) < 12','Water Cactus']
- - ['time.strftime("%d") == "30" and time.strftime("%b") == "May"','Happy Birth Day To You ! Happy Birth Day To You !!!']
+ - ['time.strftime("%d") == "1" and time.strftime("%b") == "January"','Happy New Year']
 
 Music : on
-Path to your music : '/home/pi/Music'
+Path to your music : '~/Music'
 Radios : # ['{Radio name}', '{Radio URL}']
  - ['My music', 'http://hi5.streamingsoundtracks.com']
 

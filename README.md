@@ -1,47 +1,45 @@
 # Google Assistant
 
-Google assistant pour raspberry avec sense-hat et écran en i2c
+Google assistant for Raspberry with Sense Hat and I2C Screen
 
-## ⌨ Installation :
+## Install
 
-```
-sudo apt-get install git
-git clone https://github.com/MPi3D/Google_Assistant
-```
-
-## ♬ Configuration du son :
-
-```
-sudo chmod +x /home/pi/Google_Assistant/scripts/audio_config.sh
-sudo /home/pi/Google_Assistant/scripts/audio_config.sh
+``` sh
+cd ~
+git clone https://github.com/mpi3d/google-assistant.git
+sudo chmod +x ~/google-assistant/scripts/audio-config.sh
+sudo ~/google-assistant/scripts/audio-config.sh
 ```
 
-Suivez les instructions [ici](https://developers.google.com/assistant/sdk/guides/library/python/embed/config-dev-project-and-account) pour configurer le projet et les paramètres de compte. Suivez ensuite [ce guide](https://developers.google.com/assistant/sdk/guides/library/python/embed/register-device) pour enregistrer le périphérique et obtenir le fichier client_secret {???} .json
+Follow the instructions [here](https://developers.google.com/assistant/sdk/guides/library/python/embed/config-dev-project-and-account) to configure the project and account settings.
+Then follow [this guide](https://developers.google.com/assistant/sdk/guides/library/python/embed/register-device) to register the device and get the secret client_secret{???}.json file.
 
-Placez le fichier client_secret {???} .json dans le répertoire /home/pi **⌦ NE PAS LE RENOMMER**
+Place the client_secret{???}.json file in the directory `~/`. **DO NOT RENAME IT**
 
-Puis complétez `/home/pi/Google_Assistant/src/settings.yaml` avec vos préférences.
+Then complete `~/google-assistant/src/settings.yaml` with your preferences.
 
- + [Sense hat](https://www.kubii.fr/cartes-extension-cameras-raspberry-pi/1081-raspberry-pi-sense-hat-kubii-640522710799.html)
- + [Ecran](https://projetsdiy.fr/affichage-oled-ssd1306-i2c-sur-raspberry-pi-code-python-dune-mini-station-meteo-connectee-a-jeedom-avec-la-librairie-adafruit/)
- + [Bandes led](https://www.amazon.fr/Magic-Home/s?ie=UTF8&page=1&rh=i%3Aaps%2Ck%3AMagic%20Home)
+ + [Sense Hat](https://www.kubii.fr/cartes-extension-cameras-raspberry-pi/1081-raspberry-pi-sense-hat-kubii-640522710799.html)
+ + [I2C Screen](https://projetsdiy.fr/affichage-oled-ssd1306-i2c-sur-raspberry-pi-code-python-dune-mini-station-meteo-connectee-a-jeedom-avec-la-librairie-adafruit/)
+ + [Led Strip](https://www.amazon.fr/Magic-Home/s?ie=UTF8&page=1&rh=i%3Aaps%2Ck%3AMagic%20Home)
 
-```
-sudo chmod +x /home/pi/Google_Assistant/scripts/Google_Assistant-installer-pi3.sh
-sudo  /home/pi/Google_Assistant/scripts/Google_Assistant-installer-pi3.sh
-```
-
-## ❖ Démarrage au boot :
-
-```
-sudo chmod +x /home/pi/Google_Assistant/scripts/service-installer.sh
-sudo /home/pi/Google_Assistant/scripts/service-installer.sh
-sudo systemctl enable Google_Assistant-ok-google.service
-sudo systemctl start Google_Assistant-ok-google.service
+``` sh
+sudo chmod +x ~/google-assistant/scripts/google-assistant-installer-pi3.sh
+sudo  ~/google-assistant/scripts/google-assistant-installer-pi3.sh
 ```
 
-## ❬ ❭ Démarrage manuel :
+## Run
 
-`/home/pi/env/bin/python -u /home/pi/Google_Assistant/src/main.py`
+``` sh
+~/env/bin/python -u ~/google-assistant/src/main.py
+```
 
-## + Plus d'informations sur [GassistPi](https://github.com/shivasiddharth/GassistPi)
+## Start at boot
+
+``` sh
+sudo chmod +x ~/google-assistant/scripts/service-installer.sh
+sudo ~/google-assistant/scripts/service-installer.sh
+sudo systemctl enable google-assistant-ok-google.service
+sudo systemctl start google-assistant-ok-google.service
+```
+
+## More information on [GassistPi](https://github.com/shivasiddharth/GassistPi)

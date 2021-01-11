@@ -14,7 +14,7 @@ GIT_OWNER="$(ls -ld "$GIT_DIR" | awk 'NR==1 {print $3}')"
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 repo_path="$PWD"
 
-for service in /home/pi/Google_Assistant/systemd/Google_Assistant-ok-google.service; do
-	sed "s:/home/__USER__/Google_Assistant:${repo_path}:g;s:__USER__:${GIT_OWNER}:g" "$service" \
+for service in ~/google-assistant/systemd/google-assistant-ok-google.service; do
+	sed "s:/home/__USER__/google-assistant:${repo_path}:g;s:__USER__:${GIT_OWNER}:g" "$service" \
 	 > "/lib/systemd/system/$(basename "$service")"
 done
